@@ -6,18 +6,17 @@ import loading from "../public/loading.svg";
 import Image from "next/image";
 import React from "react";
 import search from "../public/search.svg";
-
+import coinData from '../data.json';
 const CurrencyTable = () => {
   const [coins, setCoins] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await fetch("http://localhost:8000/api/v1/data/top");
-      const json = await result.json();
-      const data = json.data;
-      console.log(data);
-      setCoins(data);
+      // const result = await fetch("http://localhost:8000/api/v1/data/top");
+      // const json = await result.json();
+      // const data = json.data;
+      setCoins(coinData.data);
       setIsLoading(false);
     };
     fetchData();
@@ -73,13 +72,13 @@ const CurrencyTable = () => {
                 </tr>
               </thead>
               {isLoading ? (
-                <tbody>
+                <div className="">
                   <Image
                     className="py-72 bg-gray-100"
                     src={loading}
                     alt="Loading..."
                   />
-                </tbody>
+                  </div>
               ) : (
                 <CurrencyList coinsData={coins} className="" />
               )}

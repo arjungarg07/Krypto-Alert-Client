@@ -1,0 +1,72 @@
+{
+    "status": 1,
+    "msg": "Data fetched Successfully",
+    "data": [
+        {
+            "coinName": "Bitcoin",
+            "acronym": "BTC",
+            "highest_buy_bid": 4453001.78,
+            "lowest_sell_bid": 4468023.08,
+            "last_traded_price": 4453001.78,
+            "yes_price": 4467010.4,
+            "volumeMax": "4549000.00",
+            "volumeMin": "4440063.51",
+            "volume": 19.53272108
+        },
+        {
+            "coinName": "Binance Coin",
+            "acronym": "BNB",
+            "highest_buy_bid": 36570.26,
+            "lowest_sell_bid": 36700.1,
+            "last_traded_price": 36700.1,
+            "yes_price": 36000,
+            "volumeMax": "37499.91",
+            "volumeMin": "35665.07",
+            "volume": 3542.5031
+        },
+        {
+            "coinName": "Ethereum",
+            "acronym": "ETH",
+            "highest_buy_bid": 295248.27,
+            "lowest_sell_bid": 295258.5,
+            "last_traded_price": 295221.34,
+            "yes_price": 274912.57,
+            "volumeMax": "297422.48",
+            "volumeMin": "274132.60",
+            "volume": 310.29830668
+        },
+        {
+            "coinName": "Doge",
+            "acronym": "DOGE",
+            "highest_buy_bid": 18.216,
+            "lowest_sell_bid": 18.35,
+            "last_traded_price": 18.35,
+            "yes_price": 17.9,
+            "volumeMax": "18.686",
+            "volumeMin": "17.767",
+            "volume": 775729
+        },
+        {
+            "coinName": "Cardano",
+            "acronym": "ADA",
+            "highest_buy_bid": 170.33,
+            "lowest_sell_bid": 171.12,
+            "last_traded_price": 171.12,
+            "yes_price": 167.48,
+            "volumeMax": "172.23",
+            "volumeMin": "167.48",
+            "volume": 459116.7
+        },
+        {
+            "coinName": "Ripple",
+            "acronym": "XRP",
+            "highest_buy_bid": 88.18,
+            "lowest_sell_bid": 88.31,
+            "last_traded_price": 88.28,
+            "yes_price": 87.7,
+            "volumeMax": "89.75",
+            "volumeMin": "86.52",
+            "volume": 185833.93
+        }
+    ]
+}
