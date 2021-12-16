@@ -1,32 +1,35 @@
 // create a crypto currency table component
 import CurrencyList from "./CurrencyList";
 import { useState, useEffect } from "react";
-import fetch from "isomorphic-fetch";
 import loading from "../public/loading.svg";
 import Image from "next/image";
 import React from "react";
 import search from "../public/search.svg";
-import coinData from '../data.json';
-const CurrencyTable = () => {
-  const [coins, setCoins] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+import Link from "next/link";
 
-  useEffect(() => {
-    const fetchData = async () => {
-      // const result = await fetch("http://localhost:8000/api/v1/data/top");
-      // const json = await result.json();
-      // const data = json.data;
-      setCoins(coinData.data);
-      setIsLoading(false);
-    };
-    fetchData();
-  }, []);
+// import coinData from '../data.json';
+const CurrencyTable = ({ type, coins }) => {
+  // const [coins, setCoins] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const result = type === 'Home' ? await fetch("http://localhost:8000/api/v1/data/top") : await fetch("http://localhost:8000/api/v1/data/all");
+  //     const json = await result.json();
+  //     const data = json.data;
+  //     setCoins(data);
+  //     setIsLoading(false);
+  //   };
+  //   fetchData();
+  // }, []);
   return (
     <section className="py-1 bg-blueGray-50">
       <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4 mx-auto">
         <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 border shadow-lg rounded ">
           <div className="flex justify-between items-center px-6 pt-5 pb-4">
-            <div className="font-bold mx-64 ml-0 relative text-2xl">Market</div>
+            <div className="font-bold mx-64 ml-0 relative text-2xl">
+              {type === "Home" ? "Trending Market" : "Market"}
+            </div>
             <div className="flex focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg appearance-none leading-normal">
               <Image src={search} className="w-8 h-8 ml-4" alt="search-icon" />
               <input
@@ -78,43 +81,21 @@ const CurrencyTable = () => {
                     src={loading}
                     alt="Loading..."
                   />
-                  </div>
+                </div>
               ) : (
                 <CurrencyList coinsData={coins} className="" />
               )}
-              {/* <tbody className="bg-black">
-              </tbody> */}
             </table>
-            <div className="border border-blue-400 cursor-pointer font-medium rounded text-center">More</div>
+            {type === "Home" && (
+              <Link href="/market" passHref>
+                <div className="border border-blue-400 cursor-pointer font-medium rounded text-center transform hover:-translate-x-4 transition duration-500 ease-in-out">
+                  SEE ALL COINS ON MARKETS <span className="text-blue-400">→</span>
+                </div>
+              </Link>
+            )}
           </div>
         </div>
       </div>
-      {/* <footer className="relative pt-8 pb-6 mt-16">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-wrap items-center md:justify-between justify-center">
-            <div className="w-full md:w-6/12 px-4 mx-auto text-center">
-              <div className="text-sm text-blueGray-500 font-semibold py-1">
-                Made with{" "}
-                 <a
-                  href="https://www.creative-tim.com/product/notus-js"
-                  className="text-blueGray-500 hover:text-gray-800"
-                  target="_blank"
-                >
-                  Notus JS
-                </a>{" "}
-                by{" "}
-                <a
-                  href="https://www.creative-tim.com"
-                  className="text-blueGray-500 hover:text-blueGray-800"
-                  target="_blank"
-                > 
-                Creative Tim
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer> */}
     </section>
   );
 };
