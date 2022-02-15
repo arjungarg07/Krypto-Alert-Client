@@ -1,18 +1,19 @@
-// import { Avatar } from '../../components/Avatar';
-import { Button, ButtonLink } from '../../components/Button';
+import { Avatar } from "../../components/Avatar";
+import { Button, ButtonLink } from "../../components/Button";
 // import { ThemeSwitcher } from '../../components/ThemeSwitcher';
-// import { fetcher } from '@/lib/fetch';
-// import { useCurrentUser } from '@/lib/user'; 
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import toast from 'react-hot-toast';
-import Container from './Container';
-import styles from './Nav.module.css';
-import Spacer from './Spacer';
-import Wrapper from './Wrapper';
+// import { fetcher } from '../../lib/fetch';
+import useCurrentUser from "../../lib/user/hooks";
+import { checkSession, logout } from "../../lib/auth";
+import Link from "next/link";
+import router, { useRouter } from "next/router";
+import { useCallback, useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
+import Container from "./Container";
+import styles from "./Nav.module.css";
+import Spacer from "./Spacer";
+import Wrapper from "./Wrapper";
 
-const UserMenu = ({ user, mutate }) => {
+const UserMenu = ({ user, token, mutate }) => {
   const menuRef = useRef();
   const avatarRef = useRef();
 
@@ -21,9 +22,9 @@ const UserMenu = ({ user, mutate }) => {
   const router = useRouter();
   useEffect(() => {
     const onRouteChangeComplete = () => setVisible(false);
-    router.events.on('routeChangeComplete', onRouteChangeComplete);
+    router.events.on("routeChangeComplete", onRouteChangeComplete);
     return () =>
-      router.events.off('routeChangeComplete', onRouteChangeComplete);
+      router.events.off("routeChangeComplete", onRouteChangeComplete);
   });
 
   useEffect(() => {
@@ -36,23 +37,24 @@ const UserMenu = ({ user, mutate }) => {
         setVisible(false);
       }
     };
-    document.addEventListener('mousedown', onMouseDown);
+    document.addEventListener("mousedown", onMouseDown);
     return () => {
-      document.removeEventListener('mousedown', onMouseDown);
+      document.removeEventListener("mousedown", onMouseDown);
     };
   }, []);
 
-  // const onSignOut = useCallback(async () => {
-  //   try {
-  //     await fetcher('/api/auth', {
-  //       method: 'DELETE',
-  //     });
-  //     toast.success('You have been signed out');
-  //     mutate({ user: null });
-  //   } catch (e) {
-  //     toast.error(e.message);
-  //   }
-  // }, [mutate]);
+  const onSignOut = useCallback(async () => {
+    try {
+      await logout();
+      mutate({ user: null });
+      mutate({ token: null });
+      router.push("/");
+      toast.success("You have been signed out");
+    } catch (e) {
+      console.log(e);
+      toast.error(e.message);
+    }
+  }, [mutate, router]);
 
   return (
     <div className={styles.user}>
@@ -61,7 +63,7 @@ const UserMenu = ({ user, mutate }) => {
         ref={avatarRef}
         onClick={() => setVisible(!visible)}
       >
-        {/* <Avatar size={32} username={user.username} url={user.profilePicture} /> */}
+        <Avatar size={32} username={user.username} url={"/default_user.jpg"} />
       </button>
       <div
         ref={menuRef}
@@ -77,11 +79,10 @@ const UserMenu = ({ user, mutate }) => {
             <Link passHref href="/settings">
               <a className={styles.item}>Settngs</a>
             </Link>
-            <div className={styles.item} style={{ cursor: 'auto' }}>
+            <div className={styles.item} style={{ cursor: "auto" }}>
               <Container alignItems="center">
                 <span>Theme</span>
                 <Spacer size={0.5} axis="horizontal" />
-                {/* <ThemeSwitcher /> */}
               </Container>
             </div>
             <button onClick={onSignOut} className={styles.item}>
@@ -95,8 +96,24 @@ const UserMenu = ({ user, mutate }) => {
 };
 
 const Nav = () => {
-  // const { data: { user } = {}, mutate } = useCurrentUser();
+  const { data, mutate } = useCurrentUser();
+  console.log("navbar", data?.user, data?.token);
+  // const [user, setUser] = useState(null);
+  const router = useRouter();
 
+  useEffect(() => {
+    async () => {
+      try {
+        const response = await checkSession();
+        if (response?.status == 0) {
+          await logout();
+          router.push("/");
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+  });
   return (
     <nav className={styles.nav}>
       <Wrapper className={styles.wrapper}>
@@ -109,11 +126,15 @@ const Nav = () => {
             <a className={styles.logo}>Krypto</a>
           </Link>
           <Container>
-            {/* {user ? (
+            {data?.token ? (
               <>
-                <UserMenu user={user} mutate={mutate} />
+                <UserMenu
+                  user={data?.user}
+                  token={data?.token}
+                  mutate={mutate}
+                />
               </>
-            ) : ( */}
+            ) : (
               <>
                 <Link passHref href="/login">
                   <ButtonLink
@@ -132,7 +153,7 @@ const Nav = () => {
                   </Button>
                 </Link>
               </>
-            {/* )} */}
+            )}
           </Container>
         </Container>
       </Wrapper>
