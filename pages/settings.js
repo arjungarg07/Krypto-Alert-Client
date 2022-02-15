@@ -1,4 +1,4 @@
-import { Settings } from '../../page-components/Settings';
+// import { Settings } from '../../page-components/Settings';
 import Head from 'next/head';
 
 const SettingPage = () => {
@@ -7,7 +7,7 @@ const SettingPage = () => {
       <Head>
         <title>Settings</title>
       </Head>
-      <Settings />
+      {/* <Settings /> */}
     </>
   );
 };
