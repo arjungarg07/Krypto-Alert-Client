@@ -10,19 +10,19 @@ const baseUrl = "https://kryptoalert.herokuapp.com";
 const localUrl = "http://localhost:8000";
 
 export default function Home({ coins }) {
-  // if (typeof window !== "undefined") {
-  //   if (process.browser) {
-  //     window.$crisp = [];
-  //     window.CRISP_WEBSITE_ID = "7efcaa30-3f16-4971-8117-01e8ea316e99";
-  //     (function () {
-  //       let d = document;
-  //       let s = d.createElement("script");
-  //       s.src = "https://client.crisp.chat/l.js";
-  //       s.async = 1;
-  //       d.getElementsByTagName("head")[0].appendChild(s);
-  //     })();
-  //   }
-  // }
+  if (typeof window !== "undefined") {
+    if (process.browser) {
+      window.$crisp = [];
+      window.CRISP_WEBSITE_ID = "7efcaa30-3f16-4971-8117-01e8ea316e99";
+      (function () {
+        let d = document;
+        let s = d.createElement("script");
+        s.src = "https://client.crisp.chat/l.js";
+        s.async = 1;
+        d.getElementsByTagName("head")[0].appendChild(s);
+      })();
+    }
+  }
   return (
     <div>
       {/* <AlertModal /> */}
