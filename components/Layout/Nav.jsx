@@ -3,7 +3,8 @@ import { Button, ButtonLink } from "../../components/Button";
 // import { ThemeSwitcher } from '../../components/ThemeSwitcher';
 // import { fetcher } from '../../lib/fetch';
 import useCurrentUser from "../../lib/user/hooks";
-import { checkSession, logout } from "../../lib/auth";
+import { checkSession} from "../../lib/auth";
+// import { checkSession, logout } from "../../lib/auth";
 import Link from "next/link";
 import router, { useRouter } from "next/router";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -45,7 +46,7 @@ const UserMenu = ({ user, token, mutate }) => {
 
   const onSignOut = useCallback(async () => {
     try {
-      await logout();
+      // await logout();
       mutate({ user: null });
       mutate({ token: null });
       router.push("/");
