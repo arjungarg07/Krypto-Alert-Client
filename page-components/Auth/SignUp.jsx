@@ -30,7 +30,7 @@ const SignUp = () => {
       e.preventDefault();
       try {
         setIsLoading(true);
-        const response = await fetch(`${localUrl}/api/v1/signup`, {
+        const response = await fetch(`${baseUrl}/api/v1/signup`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
